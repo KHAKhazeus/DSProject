@@ -24,32 +24,41 @@ public:
     ListNode<DataType>* gethead(){ return _head; }
 
     NonDecreaseList intersectionWith(NonDecreaseList& that){
-
-    }
-
-    bool insert(int pos, DataType data){
-        auto temp = gethead();
-        if(pos >= 1 && pos <= getSize() + 1){
-            for(int i = 0; i < pos - 1; i ++){
-                temp = temp->getNext();
+        auto newList = NonDecreaseList();
+        auto thisPointer = this->gethead()->getNext();
+        auto thatPointer = that.gethead()->getNext();
+        auto thisEnd = this->_rear;
+        auto thatEnd = that._rear;
+        while(thisPointer && thatPointer){
+            if(thisPointer->getData() == thatPointer->getData()) {
+                newList.insert(thisPointer->getData());
+                thisPointer = thisPointer->getNext();
+                thatPointer = thatPointer->getNext();
             }
-            auto newNode = ListNode<DataType>::createNode(data);
-
-            if(newNode != nullptr){
-                newNode->setNext(temp->getNext());
-                temp->setNext(newNode);
-                upSize();
-                if(temp == _rear){
-                    _rear = newNode;
-                }
-                return true;
+            else if(thisPointer->getData() > thatPointer->getData()){
+                thatPointer = thatPointer->getNext();
             }
             else{
-                return false;
+                thisPointer = thisPointer->getNext();
             }
         }
-        else{
+        return newList;
+    }
+
+    bool insert(DataType data){
+        auto temp = gethead();
+        while(temp->getNext() && temp->getNext()->getData() < data) {
+            temp = temp->getNext();
+        }
+        if((temp->getNext()) && temp -> getNext() -> getData() == data){
             return false;
+        }
+        else{
+            auto newNode = ListNode<DataType>::createNode(data);
+            newNode->setNext(temp->getNext());
+            temp->setNext(newNode);
+            upSize();
+            return true;
         }
     }
 
@@ -57,12 +66,16 @@ public:
         bool result = false;
         int i = 0;
         auto temp = gethead();
-        while(temp -> getNext() -> getData() < value){
+        while(temp->getNext() && temp -> getNext() -> getData() < value){
             temp = temp->getNext();
             i++;
         }
-        if(temp -> getNext() -> getData() == value){
+        if(!temp->getNext()){
+            result = false;
+        }
+        else if(temp -> getNext() -> getData() == value){
             result = deleteNodeByPos(++i);
+            downSize();
         }
         return result;
     }
@@ -71,9 +84,12 @@ public:
         bool result = false;
         int i = 0;
         auto temp = gethead();
-        while(temp -> getNext() -> getData() < value){
+        while(temp->getNext() && temp -> getNext() -> getData() < value){
             temp = temp->getNext();
             i++;
+        }
+        if(!temp->getNext()){
+            result = false;
         }
         if(temp -> getNext() -> getData() == value){
             result = true;
@@ -138,5 +154,6 @@ private:
     ListNode<DataType> *_rear;
 
 };
+
 
 #endif //DSPROJECT_LIST_H

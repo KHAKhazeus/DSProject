@@ -10,4 +10,6 @@ add_executable(test_signup_system
 add_executable(intersection_of_chains
         intersection_of_chains/intersection_of_chains.cpp
         intersection_of_chains/ListNode.h
-        intersection_of_chains/List.h)
+        intersection_of_chains/NonDecreaseList.h maze/maze.cpp)
+add_executable(maze
+        maze//maze.cpp)
