@@ -25,3 +25,5 @@ add_executable(bank_queue
         bank_queue/bank_queue.cpp
         bank_queue/Queue.h
         bank_queue/ListNode.h)
+add_executable(family_tree_system
+        family_tree_system/family_tree_system.cpp family_tree_system/Tree.h family_tree_system/TreeNode.h)

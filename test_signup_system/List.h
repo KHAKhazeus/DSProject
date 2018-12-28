@@ -8,17 +8,17 @@
 #include "ListNode.h"
 
 template <typename T>
-class Stack{
+class List{
 
     typedef T DataType;
 
 public:
-    ~Stack(){ makeEmpty(); delete _head;}
+    ~List(){ makeEmpty(); delete _head;}
     void upSize(){ _size++; }
     void downSize(){ _size--;}
     void setSize(int size){ _size = size; }
     int getSize(){return _size;}
-    Stack(): _head(ListNode<DataType>::getNewHeadNode()), _size(0), _rear(nullptr){ _rear = _head; }
+    List(): _head(ListNode<DataType>::getNewHeadNode()), _size(0), _rear(nullptr){ _rear = _head; }
     ListNode<DataType>* gethead(){ return _head; }
 
     bool insertBack(DataType data){
