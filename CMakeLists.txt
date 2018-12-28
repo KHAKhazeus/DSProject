@@ -21,3 +21,7 @@ add_executable(expression_transform
         expression_transform/expression_transform.cpp
         expression_transform/ListNode.h
         expression_transform/Stack.h)
+add_executable(bank_queue
+        bank_queue/bank_queue.cpp
+        bank_queue/Queue.h
+        bank_queue/ListNode.h)

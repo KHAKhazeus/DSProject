@@ -143,6 +143,7 @@ int main(){
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');// 略过缓存
             std::cerr << "请输入0或1:" ;
         }
+        //TODO:去除？读取多余的回车
         getchar();
         if(control){
             solveOnce();

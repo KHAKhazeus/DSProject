@@ -8,29 +8,26 @@
 #include "ListNode.h"
 
 template <typename T>
-class Stack{
+class Queue{
 
     typedef T DataType;
 
 public:
-    ~Stack(){ makeEmpty(); delete _head;}
+    ~Queue(){ makeEmpty(); delete _head;}
     void upSize(){ _size++; }
     void downSize(){ _size--;}
     void setSize(int size){ _size = size; }
     int getSize(){return _size;}
-    Stack(): _head(ListNode<DataType>::getNewHeadNode()), _size(0), _rear(nullptr){ _rear = _head; }
+    Queue(): _head(ListNode<DataType>::getNewHeadNode()), _size(0), _rear(nullptr){ _rear = _head; }
     ListNode<DataType>* gethead(){ return _head; }
 
-    bool push(DataType data){
+    bool enQueue(DataType data){
         auto p = ListNode<DataType>::createNode(data);
         if(p != nullptr){
-            if(!gethead()->getNext()){
-                _rear = p;
-            }
-            p->setNext(gethead()->getNext());
-            gethead()->setNext(p);
+            _rear->setNext(p);
             p->upRef();
             upSize();
+            _rear = _rear->getNext();
             return true;
         }
         else{
@@ -38,23 +35,18 @@ public:
         }
     }
 
-    bool isEmpty(){
-        return getSize() <= 0;
-    }
-
-    //peek调用必须保证不为空
-    DataType peek(){
+    DataType peekQueue(){
         assert(getSize() != 0);
         return gethead()->getNext()->getData();
     }
 
-    bool pop(){
+    bool deQueue(){
         if(getSize()){
             auto temp = gethead()->getNext();
             gethead()->setNext(temp->getNext());
             temp->deRef();
-            this->downSize();
-            if(!temp->getRef()){
+            downSize();
+            if(temp->getRef() == 0){
                 delete temp;
             }
             return true;
