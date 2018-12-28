@@ -48,16 +48,18 @@ public:
     const int getRef(){ return _ref; }
     void upRef(){ _ref++; }
     void deRef(){ _ref--; }
-    ~ListNode(){std::cout << "destruct one" << "data:" << typeid(_data).hash_code() << std::endl;}
+    ~ListNode(){
+//        std::cout << "destruct one" << "data:" << typeid(_data).hash_code() << std::endl;
+    }
 
 private:
 
     explicit ListNode(const DataType data): _data(data), _next_node(nullptr), _ref(0){
-        std::cout << "construct one" << "data:" << typeid(_data).hash_code() << std::endl;
+//        std::cout << "construct one" << "data:" << typeid(_data).hash_code() << std::endl;
     }
     //_data must have auto constructor
     ListNode(): _data(), _next_node(nullptr),_ref(-1){
-        std::cout << "construct one" << "data:" << typeid(_data).hash_code() << std::endl;
+//        std::cout << "construct one" << "data:" << typeid(_data).hash_code() << std::endl;
     }
     DataType _data;
     ListNode *_next_node;

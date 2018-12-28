@@ -5,6 +5,7 @@
 //输出说明：在一行中输出两个输入序列的交集序列，数字间用空格分开，结尾不能有多余空格；若新链表为空，输出NULL。
 
 #include <iostream>
+#include <limits>
 #include "NonDecreaseList.h"
 
 //根据需要重载
@@ -60,6 +61,7 @@ std::ostream& operator<<(std::ostream& out, NonDecreaseList<int>& target){
     return out;
 }
 
+//memory test passed
 int main(){
     NonDecreaseList<int> first = NonDecreaseList<int>();
     NonDecreaseList<int> second = NonDecreaseList<int>();

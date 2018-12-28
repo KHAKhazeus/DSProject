@@ -15,7 +15,7 @@ class NonDecreaseList{
 
 public:
 
-    ~NonDecreaseList(){ makeEmpty();}
+    ~NonDecreaseList(){ makeEmpty(); delete _head;}
     void upSize(){ _size++; }
     void downSize(){ _size--;}
     void setSize(int size){ _size = size; }
@@ -57,6 +57,7 @@ public:
             auto newNode = ListNode<DataType>::createNode(data);
             newNode->setNext(temp->getNext());
             temp->setNext(newNode);
+            newNode->upRef();
             upSize();
             return true;
         }
@@ -105,6 +106,7 @@ public:
             }
             auto deleteNode = temp->getNext();
             temp->setNext(deleteNode->getNext());
+            deleteNode->deRef();
             if(deleteNode == _rear){
                 _rear = temp;
             }

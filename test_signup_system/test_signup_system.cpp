@@ -9,9 +9,10 @@
 
 #include <vector>
 #include <iostream>
+#include <limits>
+#include <string>
 #include "ListNode.h"
 #include "List.h"
-#include <string>
 
 class Examinee{
 public:
@@ -57,7 +58,7 @@ std::ostream & operator << (std::ostream& outputStream, Examinee & examinee){
     return outputStream;
 }
 
-class ExamineeList : public List<Examinee>{
+class ExamineeList : public Stack<Examinee>{
 public:
 
     static Examinee defaultNull;
