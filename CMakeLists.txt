@@ -16,5 +16,8 @@ add_executable(intersection_of_chains
 add_executable(maze
         maze/maze.cpp
         maze/ListNode.h
-        maze/Stack.h
-        )
+        maze/Stack.h)
+add_executable(expression_transform
+        expression_transform/expression_transform.cpp
+        expression_transform/ListNode.h
+        expression_transform/Stack.h)

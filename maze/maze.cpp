@@ -201,6 +201,7 @@ void solveMaze(){
     visited[startRow][startCol] = true;
     if(startRow == endRow && startCol == endCol){
         listMaze(true, &stack);
+        std::cout << std::endl;
         std::cout << "迷宫路径:" << std::endl;
         stack.mazeListAll(stack.gethead()->getNext());
     }
