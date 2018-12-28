@@ -21,8 +21,23 @@ public:
         return _root;
     }
 
-    TreeNode<DataType>* searchFor(DataType& target){
-
+    TreeNode<DataType>* searchNode(DataType target, TreeNode<DataType>* from){
+        TreeNode<DataType>* result = nullptr;
+        if(from->getData() == target){
+            return result = from;
+        }
+        else if(from->getFirstChild() == nullptr && from->getNextSibling() == nullptr){
+            return nullptr;
+        }
+        else if(from->getFirstChild()){
+            return result = searchNode(target, from->getFirstChild());
+        }
+        else if(from->getNextSibling()){
+            return result = searchNode(target, from->getNextSibling());
+        }
+        else{
+            return nullptr;
+        }
     }
 
     bool insertAsChild(TreeNode<DataType>* target, DataType value){
@@ -70,7 +85,7 @@ public:
 
     //按照二叉树形式删除
     void deleteNode(TreeNode<DataType> *target){
-        while(target->getNextSibling() != nullptr || target->getFirstChild() != nullptr){
+        if(target->getNextSibling() != nullptr || target->getFirstChild() != nullptr){
             if(target->getFirstChild()){
                 deleteNode(target->getFirstChild());
             }

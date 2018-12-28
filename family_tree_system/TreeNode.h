@@ -63,19 +63,19 @@ public:
     TreeNode* getParent(){ return _parent; }
     TreeNode* getPreviousSibling(){ return _previous_sibling; }
     ~TreeNode(){
-        std::cout << "destruct one" << "data:" << typeid(_data).hash_code() << std::endl;
+//        std::cout << "destruct one" << "data:" << typeid(_data).hash_code() << std::endl;
     }
 
 private:
 
     explicit TreeNode(const DataType data): _data(data), _next_sibling(nullptr), _first_child(nullptr),
         _previous_sibling(nullptr), _parent(nullptr){
-        std::cout << "construct one" << "data:" << typeid(_data).hash_code() << std::endl;
+//        std::cout << "construct one" << "data:" << typeid(_data).hash_code() << std::endl;
     }
     //_data must have auto constructor
     TreeNode(): _data(), _next_sibling(nullptr), _first_child(nullptr), _previous_sibling(nullptr),
         _parent(nullptr){
-        std::cout << "construct one" << "data:" << typeid(_data).hash_code() << std::endl;
+//        std::cout << "construct one" << "data:" << typeid(_data).hash_code() << std::endl;
     }
     DataType _data;
     TreeNode *_next_sibling;
