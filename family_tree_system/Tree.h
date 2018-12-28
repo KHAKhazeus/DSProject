@@ -93,7 +93,7 @@ public:
                 deleteNode(target->getNextSibling());
             }
         }
-        auto nextSibling = target->getParent();
+        auto nextSibling = target->getNextSibling();
         auto previousSibling = target->getPreviousSibling();
         auto parent = target->getParent();
         if(parent){
