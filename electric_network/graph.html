@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>一个简单的关系图</title>
+    <!-- 引入 G6 文件 -->
+    <script src="./g6.js"></script>
+  </head>
+  <body>
+    <!-- 创建图容器 -->
+    <div id="mountNode"></div>
+    <script>
+      const data = {
+        nodes: [{ id: 'a', x: 840, y:740, label: 'a'},{ id: 'b', x: 780, y:320, label: 'b'},{ id: 'c', x: 940, y:720, label: 'c'},{ id: 'd', x: 870, y:860, label: 'd'},{ id: 'e', x: 500, y:440, label: 'e'},], edges:[ {id: '0x7f8da4d005d0', source: 'a', target: 'b', label: '4'},{id: '0x7f8da4d00640', source: 'a', target: 'e', label: '6'},{id: '0x7f8da4d006b0', source: 'b', target: 'c', label: '7'},{id: '0x7f8da4d00720', source: 'c', target: 'd', label: '7'},]      };
+      const graph = new G6.Graph({
+        container: 'mountNode',
+        width: 1000,
+        height: 1000
+      });
+      graph.read(data);
+    </script>
+  </body>
+</html>

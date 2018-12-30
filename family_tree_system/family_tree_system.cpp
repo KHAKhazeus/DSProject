@@ -190,7 +190,7 @@ void basic_function(){
                 std::cout << std::endl;
                 break;
             }
-            
+
             default:
                 break;
         }

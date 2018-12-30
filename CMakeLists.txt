@@ -3,8 +3,6 @@ project(DSProject)
 
 set(CMAKE_CXX_STANDARD 14)
 
-
-
 add_executable(test_signup_system
         test_signup_system/test_signup_system.cpp
         test_signup_system/ListNode.h
@@ -26,4 +24,17 @@ add_executable(bank_queue
         bank_queue/Queue.h
         bank_queue/ListNode.h)
 add_executable(family_tree_system
-        family_tree_system/family_tree_system.cpp family_tree_system/Tree.h family_tree_system/TreeNode.h)
+        family_tree_system/family_tree_system.cpp
+        family_tree_system/Tree.h
+        family_tree_system/TreeNode.h)
+add_executable(electric_network
+        electric_network/electric_network.cpp
+        electric_network/EdgeList.h
+        electric_network/VerticesTable.h
+        electric_network/Vertice.h
+        electric_network/Edge.h
+        electric_network/Graph.h
+        electric_network/List.h
+        electric_network/ListNode.h
+        electric_network/MinHeap.h
+        electric_network/g6.js)
