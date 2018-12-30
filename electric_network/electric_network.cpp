@@ -22,6 +22,7 @@ void outputTitle(){
 
 Graph<std::string> systemGraph = Graph<std::string>();
 Graph<std::string> MST = Graph<std::string>();
+
 void basic_control(){
     while(true){
         char control;

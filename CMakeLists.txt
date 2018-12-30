@@ -38,3 +38,6 @@ add_executable(electric_network
         electric_network/ListNode.h
         electric_network/MinHeap.h
         electric_network/g6.js)
+add_executable(cut_log
+        cut_log/cut_log.cpp
+        cut_log/IntMinHeap.h)
