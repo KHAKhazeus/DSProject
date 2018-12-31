@@ -13,7 +13,7 @@ class List{
     typedef T DataType;
 
 public:
-    ~List(){ makeEmpty(); if(_head->getRef() == -1){delete _head;}}
+    ~List(){}
     void upSize(){ _size++; }
     void downSize(){ _size--;}
     void setSize(int size){ _size = size; }
@@ -116,19 +116,15 @@ public:
     }
 
     void makeEmpty(){
-//        auto cur = _head;
-//        while(cur -> getNext()){
-//            if( cur->getNext()->getRef() == 0){
-//                auto temp = cur->getNext();
-//                cur->setNext(temp->getNext());
-//                delete temp;
-//            }
-//            else{
-//                cur = cur->getNext();
-//            }
-//        }
-//        _rear = _head;
+        auto cur = _head;
+        while(cur -> getNext()){
+            auto temp = cur->getNext();
+            cur->setNext(temp->getNext());
+            delete temp;
+        }
+        _rear = _head;
         setSize(0);
+        delete _head;
     };
 
 private:

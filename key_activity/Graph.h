@@ -7,7 +7,6 @@
 
 #include "VerticesTable.h"
 #include "EdgeList.h"
-#include "MinHeap.h"
 #include <fstream>
 #include <random>
 
@@ -16,7 +15,9 @@ class GraphMinHeap{
 public:
 
     ~GraphMinHeap(){
-        delete []store;
+        for(auto i = 0; i < _size; i++){
+            store[i]->deRef();
+        }
     }
 
     explicit GraphMinHeap(const int size):_size(0), store(nullptr){
@@ -114,6 +115,59 @@ template <typename DataType>
 class Graph{
 public:
 
+    ~Graph(){
+        allEdges.getEdgesList().makeEmpty();
+        allVertices.getVerticesList().makeEmpty();
+    }
+
+    List<Edge<DataType>*> getEdgesList(){
+        return allEdges.getEdgesList();
+    }
+
+    int getVerticesSize(){
+        return allVertices.getSize();
+    }
+
+    int getEdgesSize(){
+        return allEdges.getSize();
+    }
+
+    Edge<DataType>* getEdgeByOrder(int order){
+        Edge<DataType>* result = nullptr;
+        if(allEdges.getSize()){
+            ListNode<Edge<DataType>*>* node = allEdges.getEdgesList().gethead()->getNext();
+            while(node){
+                if(node->getData()->getInputOrder() == order){
+                    result = node->getData();
+                }
+            }
+        }
+        return result;
+    }
+
+    Vertice<DataType>* getVerticeByTopo(int topoValue){
+        Vertice<DataType>* result = nullptr;
+        if(allVertices.getSize()){
+            ListNode<Vertice<DataType>*>* node = allVertices.getVerticesList().gethead()->getNext();
+            while(node){
+                if(node->getData()->getTopographOrder() == topoValue){
+                    result = node->getData();
+                }
+                node = node->getNext();
+            }
+        }
+        return result;
+    }
+
+    bool isInVertices(DataType& value){
+        if(allVertices.findVerticeByValue(value)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     Graph& operator=(const Graph& right){
         if(this != &right){
             auto tempVer = right.allVertices.getVerticesList().gethead();
@@ -178,17 +232,6 @@ public:
                   "    <script>\n"
                   "      const data = {\n"
                   "        nodes: [";
-//
-//                  "      };\n"
-//                  "      const graph = new G6.Graph({\n"
-//                  "        container: 'mountNode',\n"
-//                  "        width: 500,\n"
-//                  "        height: 500\n"
-//                  "      });\n"
-//                  "      graph.read(data);\n"
-//                  "    </script>\n"
-//                  "  </body>\n"
-//                  "</html>";
         if(allVertices.getSize()){
             auto temp = allVertices.getVerticesList().gethead()->getNext();
             while(temp){
@@ -247,7 +290,7 @@ public:
         }
     }
 
-    bool addNewEdge(DataType InValue, DataType OutValue, int edgeValue){
+    bool addNewEdge(DataType InValue, DataType OutValue, int edgeValue, int order){
         auto inVertice = allVertices.findVerticeByValue(InValue);
         auto outVertice = allVertices.findVerticeByValue(OutValue);
         auto newEdge = Edge<DataType>::createEdge(edgeValue);
@@ -279,6 +322,7 @@ public:
                 temp->setNextOutEdge(newEdge);
             }
             //最后存入边的list之中以备删除时执行内存释放
+            newEdge->setInputOrder(order);
             allEdges.insertNewEdges(newEdge);
             return true;
         }
@@ -339,9 +383,65 @@ public:
         return MST;
     }
 
+    bool generateTopologicalOrder(){
+
+    }
+
 private:
     VerticesTable<DataType> allVertices;
     EdgeList<DataType> allEdges;
 };
 
+template <>
+bool Graph<int>::generateTopologicalOrder(){
+    if(allVertices.getSize()){
+        int topo = 1;
+        int* count = new int[allVertices.getSize() + 1]();
+        int top = -1;
+        List<Vertice<int>*> vertice = allVertices.getVerticesList();
+        ListNode<Vertice<int>*>* verticeNext = vertice.gethead()->getNext();
+        while(verticeNext != nullptr){
+            auto inEdge = verticeNext->getData()->getFirstIn();
+            while(inEdge){
+                count[verticeNext->getData()->getData()]++;
+                inEdge = inEdge->getNextInEdge();
+            }
+            verticeNext = verticeNext->getNext();
+        }
+        for(auto i = 1; i <= allVertices.getSize(); i++){
+            if(count[i] == 0){
+                count[i] = top;
+                top = i;
+            }
+        }
+        auto topoCount = 0;
+        while(topoCount < allVertices.getSize()){
+            if(top == -1){
+                return false;
+            }
+            else{
+                auto target = top;
+                top = count[target];
+                topoCount++;
+                Vertice<int>* targetVertice = allVertices.findVerticeByValue(target);
+                targetVertice->setTopographOrder(topoCount);
+                auto edge = targetVertice->getFirstOut();
+                while(edge){
+                    count[edge->getInVertice()->getData()]--;
+                    edge = edge->getNextOutEdge();
+                }
+                for(auto i = 1; i <= allVertices.getSize(); i++){
+                    if(count[i] == 0){
+                        count[i] = top;
+                        top = i;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 #endif //DSPROJECT_GRAPH_H

@@ -41,3 +41,12 @@ add_executable(electric_network
 add_executable(cut_log
         cut_log/cut_log.cpp
         cut_log/IntMinHeap.h)
+add_executable(key_activity
+        key_activity/key_activity.cpp
+        key_activity/EdgeList.h
+        key_activity/Edge.h
+        key_activity/Graph.h
+        key_activity/ListNode.h
+        key_activity/List.h
+        key_activity/Vertice.h
+        key_activity/VerticesTable.h)

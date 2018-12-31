@@ -14,7 +14,7 @@ class VerticesTable{
 
 public:
 
-    ~VerticesTable(){ }
+    ~VerticesTable(){}
     int getSize(){ return _vertices.getSize(); }
     VerticesTable(): _vertices(List<Vertice<DataType>*>()){}
 
