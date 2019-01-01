@@ -7,11 +7,11 @@
 
 //由于内容直接使用比较对象，从而不需要管理释放问题，只需要管理数组的释放问题
 template <typename DataType>
-class IntMinHeap{
+class MinHeap{
 public:
-    explicit IntMinHeap(int size):_size(size){ store = new DataType[size]; }
+    explicit MinHeap(int size):_size(size){ store = new DataType[size]; }
 
-    ~IntMinHeap(){
+    ~MinHeap(){
         delete []store;
     }
 
@@ -45,6 +45,7 @@ public:
         auto result = store[0];
         swap(0, _size - 1);
         siftDown(0);
+        _size--;
         return result;
     }
 

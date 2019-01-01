@@ -36,7 +36,7 @@ add_executable(electric_network
         electric_network/Graph.h
         electric_network/List.h
         electric_network/ListNode.h
-        electric_network/MinHeap.h
+        electric_network/MeanHeap.h
         electric_network/g6.js)
 add_executable(cut_log
         cut_log/cut_log.cpp
@@ -50,3 +50,8 @@ add_executable(key_activity
         key_activity/List.h
         key_activity/Vertice.h
         key_activity/VerticesTable.h)
+add_executable(eight_sort
+        eight_sort/eight_sort.cpp
+        eight_sort/IntMeanHeap.h
+        eight_sort/g2.js
+        eight_sort/Queue.h)

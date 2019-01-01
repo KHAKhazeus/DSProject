@@ -7,7 +7,7 @@
 
 #include "VerticesTable.h"
 #include "EdgeList.h"
-#include "MinHeap.h"
+#include "MeanHeap.h"
 #include <fstream>
 #include <random>
 
