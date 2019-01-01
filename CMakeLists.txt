@@ -54,4 +54,5 @@ add_executable(eight_sort
         eight_sort/eight_sort.cpp
         eight_sort/IntMeanHeap.h
         eight_sort/g2.js
-        eight_sort/Queue.h)
+        eight_sort/Queue.h
+        eight_sort/ListNode.h)

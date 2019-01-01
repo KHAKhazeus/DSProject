@@ -8,6 +8,8 @@
 #include <vector>
 #include <ctime>
 #include "IntMeanHeap.h"
+#include "Queue.h"
+#include <cmath>
 
 void outputTitle(){
     std::cout << "**" << "\t\t\t\t" << "排序算法比较" << "\t\t\t\t" << "**" << std::endl;
@@ -63,6 +65,7 @@ void quick_sort(std::vector<int> source){
     auto stop = clock();
     std::cout << "快速排序所用时间: " << stop - start << std::endl;
     std::cout << "快速排序交换次数: " << swapTimes << std::endl;
+    std::cout << std::endl;
 }
 
 void heap_sort(std::vector<int> source){
@@ -79,9 +82,6 @@ void heap_sort(std::vector<int> source){
     auto stop = clock();
     std::cout << "堆排序所用时间: " << stop - start << std::endl;
     std::cout << "堆排序交换次数: " << swapTimes << std::endl;
-    for(auto i: source){
-        std::cout << i << " ";
-    }
     std::cout << std::endl;
 }
 
@@ -119,6 +119,7 @@ void shell_sort(std::vector<int> source){
     auto stop = clock();
     std::cout << "希尔插入排序所用时间: " << stop - start << std::endl;
     std::cout << "希尔插入排序交换次数: " << swapTimes << std::endl;
+    std::cout << std::endl;
 }
 
 void insert_sort(std::vector<int> source){
@@ -142,6 +143,7 @@ void insert_sort(std::vector<int> source){
     auto stop = clock();
     std::cout << "直接插入排序所用时间: " << stop - start << std::endl;
     std::cout << "直接插入排序交换次数: " << swapTimes << std::endl;
+    std::cout << std::endl;
 }
 
 void select_sort(std::vector<int> source){
@@ -189,11 +191,90 @@ void bubble_sort(std::vector<int> source){
     std::cout << std::endl;
 }
 
-void cardinal_sort(std::vector<int> source){
+void merge(std::vector<int>& source, int left, int middle, int right, long int& swapTimes){
+    std::vector<int> newCopy = source;
+    auto leftPoint = left;
+    auto rightPoint = middle + 1;
+    int pos = left;
+    while(leftPoint <= middle && rightPoint <= right){
+        if(newCopy[leftPoint] <= newCopy[rightPoint]){
+            source[pos] = newCopy[leftPoint];
+            pos++;
+            leftPoint++;
+            swapTimes++;
+        }
+        else{
+            source[pos] = newCopy[rightPoint];
+            pos++;
+            rightPoint++;
+            swapTimes++;
+        }
+    }
+    while(leftPoint <= middle){
+        source[pos] = newCopy[leftPoint];
+        leftPoint++;
+        pos++;
+        swapTimes++;
+    }
+    while(rightPoint <= right){
+        source[pos] = newCopy[rightPoint];
+        rightPoint++;
+        pos++;
+        swapTimes++;
+    }
+}
+
+void merge_sort(std::vector<int>& source, int left, int right, long int& swapTimes){
+    if(left < right){
+        auto mid = (left + right)/2;
+        merge_sort(source, left, mid, swapTimes);
+        merge_sort(source, mid + 1, right, swapTimes);
+        merge(source, left, mid, right, swapTimes);
+    }
+    else{
+        return;
+    }
+}
+
+
+void merge_sort(std::vector<int> source){
     long int swapTimes = 0;
     auto start = clock();
-
+    merge_sort(source, 0, static_cast<int>(source.size() - 1), swapTimes);
     auto stop = clock();
+    std::cout << "归并排序所用时间: " << stop - start << std::endl;
+    std::cout << "归并排序交换次数: " << swapTimes << std::endl;
+    std::cout << std::endl;
+}
+
+void cardinal_sort(std::vector<int> source){
+    long int swapTimes = 0;
+    Queue<int> cardinalQueues[10];
+    int max = *std::max_element(source.begin(), source.end());
+    int cardinalTimes = static_cast<int>( ceil( log( max )/log(10) ) );
+    auto start = clock();
+    for(auto times = 1; times <= cardinalTimes; times++){
+        for(auto i: source){
+            int repeat = static_cast<int>(pow(10, times - 1));
+            int cardinal = (i / repeat) % 10;
+            cardinalQueues[cardinal].enQueue(i);
+        }
+        int total = 0;
+        for(auto queue = 0; queue <= 9; queue++){
+            while(cardinalQueues[queue].getSize()){
+                auto value = cardinalQueues[queue].peekQueue();
+                source[total] = value;
+                total++;
+                cardinalQueues[queue].deQueue();
+                //分配
+                swapTimes++;
+            }
+        }
+    }
+    auto stop = clock();
+    std::cout << "基数排序所用时间: " << stop - start << std::endl;
+    std::cout << "基数排序交换次数: " << swapTimes << std::endl;
+    std::cout << std::endl;
 }
 
 
@@ -249,8 +330,16 @@ int main(){
                     heap_sort(source);
                     break;
                 }
+                case 7:{
+                    merge_sort(source);
+                    break;
+                }
                 case 8:{
-
+                    cardinal_sort(source);
+                    break;
+                }
+                default:{
+                    break;
                 }
             }
         }

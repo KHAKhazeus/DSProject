@@ -46,6 +46,9 @@ public:
             gethead()->setNext(temp->getNext());
             temp->deRef();
             downSize();
+            if(!getSize()){
+                _rear = _head;
+            }
             if(temp->getRef() == 0){
                 delete temp;
             }
